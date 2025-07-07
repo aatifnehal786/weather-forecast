@@ -18,6 +18,7 @@ function App() {
   const [load,setLoad] = useState(false)
   const [forecast,setForecast] = useState([])
   const [report,setReport] = useState(false)
+  const contentref = useRef(null);
 
   // const [hdata,setHdata] = useState([])
 
@@ -52,13 +53,25 @@ function App() {
         setTimeout(()=>{
           setLoad(false)
           setCity("")
-        },8000)
+        },5000)
+
+      
   })
       
 }
 
+useEffect(() => {
+  if (weatherdata?.current?.feelslike_c > 30 && contentref.current) {
+    contentref.current.style.background = 'red';
+  } else if (contentref.current) {
+    contentref.current.style.background = ''; // Reset or default
+  }
+}, [weatherdata]);
+
+
  console.log(weatherdata)
  console.log(forecast)
+//  console.log(typeof weatherdata.current.feelslike_c)
   
   
  
@@ -66,7 +79,7 @@ function App() {
   return (
 
     <div className="app">
-    <div className="container">
+    <div ref={contentref} className="container">
       
       <div className="search">
         <input value={city} placeholder='Enter City Name' onChange={handleInput} type='text'/>
@@ -103,7 +116,7 @@ function App() {
        <div className="forecast-container">
          {forecast && forecast.map((data,index)=>{
           return (
-            <div className="forecast">
+            <div key={index} className="forecast">
            
              <div className="data">
               <img src={data.day.condition.icon} alt="" />
