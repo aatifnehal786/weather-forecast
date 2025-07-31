@@ -12,7 +12,7 @@ function App() {
   const [logo,setLogo] = useState("")
   const [loading,setLoading] = useState("")
   const apiurl = "https://api.weatherapi.com/v1/forecast.json"
-  const apikey = "?key=b7b63115d1e84d1688a151848240110"
+  const apikey = "?key=80b9e405f4ac4ad78fc131946240705"
   const parameter = "&days=5&aqi=no&alerts=yes"
   const [loader,setLoader] = useState(false)
   const [load,setLoad] = useState(false)
