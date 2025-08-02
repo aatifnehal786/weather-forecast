@@ -1,4 +1,4 @@
-import {  useEffect, useRef, useState, useCallback } from 'react'
+import {  useEffect, useRef, useState } from 'react'
 import search from './assets/search.png'
 import humidity from './assets/humidity.png'
 import wind from './assets/wind.png'
@@ -12,7 +12,7 @@ function App() {
   const [logo,setLogo] = useState("")
   const [loading,setLoading] = useState("")
   const apiurl = "https://api.weatherapi.com/v1/forecast.json"
-  const apikey = "?key=80b9e405f4ac4ad78fc131946240705"
+  const apikey = "?key=b7b63115d1e84d1688a151848240110"
   const parameter = "&days=5&aqi=no&alerts=yes"
   const [loader,setLoader] = useState(false)
   const [load,setLoad] = useState(false)
@@ -22,27 +22,14 @@ function App() {
 
   // const [hdata,setHdata] = useState([])
 
-function debounce(cb,delay=1000){
-  let timer;
-  return (...args)=>{
-    clearTimeout(timer);
-    timer = setTimeout(()=>{
-       cb(...args)
-    },delay)
+
+
+   
+  
+  
+  const handleInput = (e)=>{
+    setCity(e.target.value)
   }
-}
-
- const debouncedHandleInput = useCallback(
-    debounce((value) => {
-      setCity(value);
-    }, 1000),
-    []
-  );
-
-  const handleChange = (e) => {
-    const value = e.target.value;
-    debouncedHandleInput(value);
-  };
   const handlebtn = ()=>{
       setLogo('logo')
       setLoader(true)
@@ -99,7 +86,7 @@ useEffect(() => {
     <div ref={contentref} className="container">
       
       <div className="search">
-        <input value={city} placeholder='Enter City Name' onChange={handleChange} type='text'/>
+        <input value={city} placeholder='Enter City Name' onChange={handleInput} type='text'/>
          <button onClick={handlebtn}><img src={search}></img></button>
       </div>
      {loader &&  <div className={logo} ><h2 className={loading}>Loading...</h2>{load && <h2>Loaded</h2>}</div>}
