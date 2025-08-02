@@ -17,7 +17,7 @@ function App() {
   const [loader,setLoader] = useState(false)
   const [load,setLoad] = useState(false)
   const [forecast,setForecast] = useState([])
-  // const [report,setReport] = useState(false)
+  const [report,setReport] = useState(false)
   const contentref = useRef(null);
 
   // const [hdata,setHdata] = useState([])
