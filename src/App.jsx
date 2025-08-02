@@ -32,14 +32,15 @@ function debounce(cb,delay=1000){
   }
 }
 
+   
+   
+  
   const handleInput = (e)=>{
     setCity(e.target.value)
   }
-
-   
-  const handleDebounceInput = debounce(handleInput,1000)
-  
-
+  useEffect(()=>{
+    debounce(handleInput,1000)
+  },[city])
   const handlebtn = ()=>{
       setLogo('logo')
       setLoader(true)
@@ -96,7 +97,7 @@ useEffect(() => {
     <div ref={contentref} className="container">
       
       <div className="search">
-        <input value={city} placeholder='Enter City Name' onChange={handleDebounceInput} type='text'/>
+        <input value={city} placeholder='Enter City Name' onChange={handleInput} type='text'/>
          <button onClick={handlebtn}><img src={search}></img></button>
       </div>
      {loader &&  <div className={logo} ><h2 className={loading}>Loading...</h2>{load && <h2>Loaded</h2>}</div>}
