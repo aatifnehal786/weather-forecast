@@ -32,12 +32,14 @@ function debounce(cb,delay=1000){
   }
 }
 
-   
-  const handleDebounceInput = debounce(handleInput,1000)
-  
   const handleInput = (e)=>{
     setCity(e.target.value)
   }
+
+   
+  const handleDebounceInput = debounce(handleInput,1000)
+  
+
   const handlebtn = ()=>{
       setLogo('logo')
       setLoader(true)
