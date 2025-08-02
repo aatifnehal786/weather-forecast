@@ -1,4 +1,4 @@
-import {  useEffect, useRef, useState } from 'react'
+import {  useEffect, useRef, useState, useCallback } from 'react'
 import search from './assets/search.png'
 import humidity from './assets/humidity.png'
 import wind from './assets/wind.png'
@@ -17,7 +17,7 @@ function App() {
   const [loader,setLoader] = useState(false)
   const [load,setLoad] = useState(false)
   const [forecast,setForecast] = useState([])
-  const [report,setReport] = useState(false)
+  // const [report,setReport] = useState(false)
   const contentref = useRef(null);
 
   // const [hdata,setHdata] = useState([])
@@ -25,22 +25,19 @@ function App() {
 function debounce(cb,delay=1000){
   let timer;
   return (...args)=>{
-    clearTimeout = timer;
+    clearTimeout(timer);
     timer = setTimeout(()=>{
        cb(...args)
     },delay)
   }
 }
 
-   
-   
-  
-  const handleInput = (e)=>{
-    setCity(e.target.value)
-  }
-  useEffect(()=>{
-    debounce(handleInput,1000)
-  },[city])
+const debouncedHandleInput = useCallback(
+  debounce((e) => {
+    setCity(e.target.value);
+  }, 1000),
+  []
+);
   const handlebtn = ()=>{
       setLogo('logo')
       setLoader(true)
@@ -97,7 +94,7 @@ useEffect(() => {
     <div ref={contentref} className="container">
       
       <div className="search">
-        <input value={city} placeholder='Enter City Name' onChange={handleInput} type='text'/>
+        <input value={city} placeholder='Enter City Name' onChange={debouncedHandleInput} type='text'/>
          <button onClick={handlebtn}><img src={search}></img></button>
       </div>
      {loader &&  <div className={logo} ><h2 className={loading}>Loading...</h2>{load && <h2>Loaded</h2>}</div>}
