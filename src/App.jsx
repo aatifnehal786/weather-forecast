@@ -22,10 +22,18 @@ function App() {
 
   // const [hdata,setHdata] = useState([])
 
-
+function debounce(cb,delay=1000){
+  let timer;
+  return (...args)=>{
+    clearTimeout = timer;
+    timer = setTimeout(()=>{
+       cb(...args)
+    },delay)
+  }
+}
 
    
-  
+  const handleDebounceInput = debounce(handleInput,1000)
   
   const handleInput = (e)=>{
     setCity(e.target.value)
@@ -63,7 +71,11 @@ function App() {
 useEffect(() => {
   if (weatherdata?.current?.feelslike_c > 30 && contentref.current) {
     contentref.current.style.background = 'red';
-  } else if (contentref.current) {
+  }
+  else if(weatherdata?.current?.feelslike_c < 25 && contentref.current){
+    contentref.current.style.background = 'orange';
+  }
+   else if (contentref.current) {
     contentref.current.style.background = ''; // Reset or default
   }
 }, [weatherdata]);
@@ -82,7 +94,7 @@ useEffect(() => {
     <div ref={contentref} className="container">
       
       <div className="search">
-        <input value={city} placeholder='Enter City Name' onChange={handleInput} type='text'/>
+        <input value={city} placeholder='Enter City Name' onChange={handleDebounceInput} type='text'/>
          <button onClick={handlebtn}><img src={search}></img></button>
       </div>
      {loader &&  <div className={logo} ><h2 className={loading}>Loading...</h2>{load && <h2>Loaded</h2>}</div>}
